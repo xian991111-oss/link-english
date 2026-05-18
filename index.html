@@ -28,7 +28,6 @@
       margin: 0 auto;
       background: #FFFFFF;
       position: relative;
-      overflow: hidden;
     }
 
     /* ── 屏幕切换（同一页面多个视图） ── */
@@ -484,6 +483,8 @@
       transition: all 0.2s ease;
       display: none;
       margin-top: 10px;
+      position: relative;
+      z-index: 100;
     }
     .btn-next.show { display: block; }
     .btn-next:active { transform: scale(0.98); background: #3A3A3C; }
@@ -552,7 +553,6 @@
     }
     .btn-again {
       width: 100%;
-      max-width: 280px;
       background: #007AFF;
       color: #FFFFFF;
       border: none;
@@ -562,17 +562,8 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
-      margin-bottom: 12px;
     }
-    .btn-again:active { transform: scale(0.98); background: #0062CC; }
-    .btn-home-link {
-      background: none;
-      border: none;
-      color: #007AFF;
-      font-size: 15px;
-      cursor: pointer;
-      padding: 8px;
-    }
+    .btn-again:active { transform: scale(0.98); }
 
     /* ── 怪物区 ── */
     .monster-zone {
@@ -705,6 +696,154 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .anim-in { animation: fadeSlideUp 0.35s ease both; }
+
+    /* ── 地图屏幕 ── */
+    #screen-map {
+      padding-top: 56px;
+    }
+    .map-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .map-title {
+      flex: 1;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1D1D1F;
+    }
+    .btn-collection-link {
+      background: #F5F5F7;
+      border: none;
+      border-radius: 10px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .map-path {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .region-node {
+      width: 100%;
+      background: #F5F5F7;
+      border-radius: 20px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .region-node.unlocked { border-color: #007AFF; background: #EBF4FF; }
+    .region-node.cleared { background: #34C75910; border-color: #34C759; }
+    .region-node.locked { opacity: 0.5; cursor: not-allowed; }
+    .region-emoji {
+      font-size: 36px;
+      line-height: 1;
+    }
+    .region-info { flex: 1; }
+    .region-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1D1D1F;
+    }
+    .region-monster {
+      font-size: 13px;
+      color: #6E6E73;
+      margin-top: 2px;
+    }
+    .region-status {
+      font-size: 20px;
+    }
+    .path-line {
+      width: 3px;
+      height: 24px;
+      background: #D1D1D6;
+      border-radius: 2px;
+    }
+    .path-line.done { background: #34C759; }
+    .map-tip {
+      text-align: center;
+      font-size: 13px;
+      color: #AEAEB2;
+      margin-top: 24px;
+    }
+
+    /* ── 成就图鉴屏幕 ── */
+    #screen-collection {
+      padding-top: 56px;
+    }
+    .collection-rarity-group {
+      margin-bottom: 24px;
+    }
+    .rarity-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .rarity-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .treasure-card {
+      background: #F5F5F7;
+      border-radius: 16px;
+      padding: 16px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .treasure-card.collected {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .treasure-emoji {
+      font-size: 40px;
+      line-height: 1;
+    }
+    .treasure-card:not(.collected) .treasure-emoji {
+      filter: grayscale(1);
+      opacity: 0.2;
+    }
+    .treasure-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1D1D1F;
+    }
+    .treasure-region {
+      font-size: 10px;
+      color: #6E6E73;
+    }
+    .treasure-card:not(.collected) .treasure-name,
+    .treasure-card:not(.collected) .treasure-region {
+      color: #C7C7CC;
+    }
+    .treasure-rarity-tag {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
   </style>
 </head>
 
@@ -719,7 +858,7 @@
         <div class="logo-icon">🔗</div>
         <span class="app-name">Link英语</span>
       </div>
-      <p class="app-tagline">用联想记忆，把单词变成朋友</p>
+      <p class="app-tagline">用联想记忆，把单词变成朋友 <span id="region-badge" style="font-size:12px; background:#EBF4FF; color:#007AFF; padding:2px 8px; border-radius:100px;"></span></p>
     </div>
 
     <!-- 今日进度 -->
@@ -786,6 +925,12 @@
     </div>
 
     <button class="btn-start" onclick="startLearn()">开始今日学习 →</button>
+
+    <div style="display:flex; gap:10px; margin-top:12px;">
+      <button class="btn-start" style="background:#F5F5F7; color:#1D1D1F; flex:1;" onclick="showMap()">🗺️ 冒险地图</button>
+      <button class="btn-start" style="background:#F5F5F7; color:#1D1D1F; flex:1;" onclick="showCollection()">🏆 成就图鉴</button>
+    </div>
+    <button style="width:100%; background:none; border:none; color:#AEAEB2; font-size:13px; padding:16px; cursor:pointer; margin-top:8px;" onclick="resetAllProgress()">重置进度</button>
   </div>
 
   <!-- ══ 屏幕2：学习 ══ -->
@@ -861,15 +1006,35 @@
     <!-- 正面显示：翻卡按钮 -->
     <button class="btn-flip" id="btn-flip" onclick="flipCard()">查看释义 ↓</button>
 
-    <!-- 背面显示：下一个按钮 -->
+    <!-- 下一个按钮（卡片外部，z-index 保证不被盖住） -->
     <button class="btn-next" id="btn-next" onclick="nextWord()">下一个 →</button>
 
   </div>
 
-  <!-- ══ 屏幕3：完成 ══ -->
+  <!-- ══ 屏幕3：地图 ══ -->
+  <div id="screen-map" class="screen">
+    <div class="map-top">
+      <button class="btn-back" onclick="goHome()">←</button>
+      <span class="map-title">冒险地图</span>
+      <button class="btn-collection-link" onclick="showCollection()">🏆</button>
+    </div>
+    <div class="map-path" id="map-path"></div>
+    <p class="map-tip">打败当前区域的怪物，解锁下一个区域</p>
+  </div>
+
+  <!-- ══ 屏幕4：成就图鉴 ══ -->
+  <div id="screen-collection" class="screen">
+    <div class="map-top">
+      <button class="btn-back" onclick="showMap()">←</button>
+      <span class="map-title">成就图鉴</span>
+    </div>
+    <div class="collection-grid" id="collection-grid"></div>
+  </div>
+
+  <!-- ══ 屏幕5：完成 ══ -->
   <div id="screen-done" class="screen">
-    <div class="done-emoji">🎉</div>
-    <div class="done-title">今天完成了！</div>
+    <div class="done-emoji" id="done-emoji">🎉</div>
+    <div class="done-title" id="done-title">今天完成了！</div>
     <div class="done-subtitle" id="done-subtitle">学完了 20 个单词<br/>坚持每天一点点，英语会越来越好</div>
     <div class="done-stats">
       <div class="done-stat">
@@ -885,8 +1050,7 @@
         <div class="done-stat-label">正确率</div>
       </div>
     </div>
-    <button class="btn-again" onclick="startLearn()">再练一遍</button>
-    <button class="btn-home-link" onclick="goHome()">返回主页</button>
+    <div id="done-buttons" style="width:100%; max-width:280px; display:flex; flex-direction:column; gap:10px;"></div>
   </div>
 
   <!-- 连击提示 & 粒子层（全局） -->
@@ -992,16 +1156,51 @@ function updateStreak() {
 function getStreak()       { return loadStore().streak || 0; }
 function getLearnedCount() { return Object.keys(getProgress()).length; }
 
+// 区域进度 & 成就收集
+function getRegionProgress() {
+  const store = loadStore();
+  const rp = store.regionProgress;
+  if (rp && Array.isArray(rp.cleared) && Array.isArray(rp.collection) && typeof rp.unlocked === 'number') {
+    return rp;
+  }
+  return { unlocked: 0, cleared: [], collection: [] };
+}
+function resetAllProgress() {
+  if (confirm('确定要重置所有学习进度吗？\n\n这会清除：已学单词记录、连续天数、区域通关、成就收集\n\n此操作不可撤销！')) {
+    localStorage.removeItem(STORE_KEY);
+    goHome();
+    alert('已重置！可以重新开始了 ✅');
+  }
+}
+function saveRegionProgress(data) {
+  const store = loadStore();
+  store.regionProgress = data;
+  saveStore(store);
+}
+
 // ═══════════════════════════════
-// 怪物配置（每 5 词换一个）
+// 区域 & 怪物 & 成就配置
 // ═══════════════════════════════
-const MONSTERS = [
-  { emoji: '🐛', name: '草地虫',   maxHP: 100 },
-  { emoji: '🧙', name: '迷雾法师', maxHP: 100 },
-  { emoji: '👾', name: '暗影精灵', maxHP: 100 },
-  { emoji: '🐉', name: '词语巨龙', maxHP: 100 },
+const REGIONS = [
+  { id:0, name:'新手草原', emoji:'🌱', monster:'🐛', monsterName:'草地虫',   maxHP:100, rewardEmoji:'💎', rewardName:'勇气宝石', rarity:'white' },
+  { id:1, name:'宁静溪谷', emoji:'💧', monster:'🦋', monsterName:'溪谷蝶',   maxHP:110, rewardEmoji:'🔮', rewardName:'清泉水晶', rarity:'white' },
+  { id:2, name:'迷雾森林', emoji:'🌲', monster:'🧙', monsterName:'迷雾法师',  maxHP:120, rewardEmoji:'🍀', rewardName:'幸运四叶草', rarity:'green' },
+  { id:3, name:'翠绿丘陵', emoji:'⛰️', monster:'🦊', monsterName:'丘陵灵狐',  maxHP:130, rewardEmoji:'🌿', rewardName:'翡翠之叶', rarity:'green' },
+  { id:4, name:'暗影山脉', emoji:'🏔️', monster:'👾', monsterName:'暗影精灵',  maxHP:140, rewardEmoji:'⚔️', rewardName:'暗影之刃', rarity:'blue' },
+  { id:5, name:'暴风海岸', emoji:'🌊', monster:'🦑', monsterName:'深海巨鱿',  maxHP:150, rewardEmoji:'🐚', rewardName:'海神螺号', rarity:'blue' },
+  { id:6, name:'火焰峡谷', emoji:'🌋', monster:'🐉', monsterName:'火焰巨龙',  maxHP:170, rewardEmoji:'🔥', rewardName:'烈焰之心', rarity:'purple' },
+  { id:7, name:'星辰高原', emoji:'🌌', monster:'🦅', monsterName:'星辰之鹰',  maxHP:190, rewardEmoji:'🌠', rewardName:'流星碎片', rarity:'purple' },
+  { id:8, name:'远古遗迹', emoji:'🏛️', monster:'👑', monsterName:'远古之王',  maxHP:210, rewardEmoji:'👑', rewardName:'智慧王冠', rarity:'gold' },
+  { id:9, name:'词语城堡', emoji:'🏰', monster:'🐲', monsterName:'终焉巨龙',  maxHP:250, rewardEmoji:'🌟', rewardName:'传奇之星', rarity:'gold' },
 ];
-const WORDS_PER_MONSTER = 5;
+const RARITY_INFO = {
+  white:  { label:'普通', color:'#AEAEB2', bg:'#F5F5F7', glow:'#D1D1D6' },
+  green:  { label:'稀有', color:'#34C759', bg:'#E8F8ED', glow:'#34C759' },
+  blue:   { label:'精良', color:'#007AFF', bg:'#EBF4FF', glow:'#007AFF' },
+  purple: { label:'史诗', color:'#AF52DE', bg:'#F3E8FA', glow:'#AF52DE' },
+  gold:   { label:'传说', color:'#FF9F0A', bg:'#FFF9E6', glow:'#FF9F0A' },
+};
+const WORDS_PER_REGION = Math.ceil(WORDS_A1.length / REGIONS.length); // 每个区域词数
 
 // ═══════════════════════════════
 // 状态管理
@@ -1014,9 +1213,12 @@ let state = {
   answered: false,
   correctCount: 0,
   wrongCount: 0,
-  monsterIndex: 0,
   monsterHP: 100,
   streak: 0,
+  currentRegion: 0,
+  monsterMaxHP: 100,
+  monsterEmoji: '🐛',
+  monsterName: '草地虫',
 };
 
 // ═══════════════════════════════
@@ -1051,26 +1253,118 @@ function updateHomeStats() {
   document.getElementById('stat-total').textContent = words.length;
   document.getElementById('stat-learned').textContent = getLearnedCount();
   document.getElementById('stat-streak').textContent = getStreak();
+  // 当前区域提示
+  const rp = getRegionProgress();
+  const el = document.getElementById('region-badge');
+  if (el && rp) {
+    const region = REGIONS[rp.unlocked] || REGIONS[0];
+    el.textContent = '📍 ' + region.name;
+  }
+}
+
+// ═══════════════════════════════
+// 地图 & 图鉴
+// ═══════════════════════════════
+function showMap() {
+  renderMap();
+  showScreen('map');
+}
+function renderMap() {
+  const rp = getRegionProgress();
+  const container = document.getElementById('map-path');
+  let html = '';
+  REGIONS.forEach((r, i) => {
+    if (i > 0) {
+      html += `<div class="path-line${rp.cleared.includes(i-1) ? ' done' : ''}"></div>`;
+    }
+    let status = '🔒', cls = 'locked';
+    if (i === rp.unlocked) { status = '⚔️'; cls = 'unlocked'; }
+    if (rp.cleared.includes(i)) { status = '✅'; cls = 'cleared'; }
+    const ri = RARITY_INFO[r.rarity];
+    html += `<div class="region-node ${cls}" onclick="selectRegion(${i})">
+      <div class="region-emoji">${r.emoji}</div>
+      <div class="region-info">
+        <div class="region-name">${r.name}
+          <span style="font-size:10px; padding:1px 6px; border-radius:100px; background:${ri.color}20; color:${ri.color}; margin-left:6px; font-weight:600;">${ri.label}</span>
+        </div>
+        <div class="region-monster">${r.monster} ${r.monsterName} · ${r.rewardEmoji}${r.rewardName}</div>
+      </div>
+      <div class="region-status">${status}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+function selectRegion(idx) {
+  const rp = getRegionProgress();
+  if (idx > rp.unlocked) { alert('🔒 请先通关前面的区域！'); return; }
+  startLearn(idx);
+}
+function showCollection() {
+  renderCollection();
+  showScreen('collection');
+}
+function renderCollection() {
+  const rp = getRegionProgress();
+  const container = document.getElementById('collection-grid');
+  const rarityOrder = ['gold','purple','blue','green','white'];
+  let html = '';
+  rarityOrder.forEach(rarity => {
+    const info = RARITY_INFO[rarity];
+    const regionsInRarity = REGIONS.filter(r => r.rarity === rarity);
+    if (regionsInRarity.length === 0) return;
+    const collectedCount = regionsInRarity.filter(r => rp.collection.includes(r.id)).length;
+    html += `<div class="collection-rarity-group">
+      <div class="rarity-header" style="background:${info.bg}; color:${info.color};">
+        <span class="rarity-dot" style="background:${info.color}; box-shadow:0 0 8px ${info.glow};"></span>
+        ${info.label} · ${collectedCount}/${regionsInRarity.length}
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">`;
+    regionsInRarity.forEach(r => {
+      const collected = rp.collection.includes(r.id);
+      html += `<div class="treasure-card${collected ? ' collected' : ''}" style="${collected ? 'background:'+info.bg+'; border-color:'+info.color+';' : ''}">
+        <div class="treasure-emoji">${r.rewardEmoji}</div>
+        <div class="treasure-name">${r.rewardName}</div>
+        <div class="treasure-region">${r.emoji} ${r.name}</div>
+        <span class="treasure-rarity-tag" style="background:${info.color}20; color:${info.color};">${collected ? '已收集' : info.label}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
 }
 
 // ═══════════════════════════════
 // 学习逻辑
 // ═══════════════════════════════
-function startLearn() {
-  const words = WORDS_DB[state.currentLevel]?.words || [];
-  if (words.length === 0) { alert('这个词库还没有内容，请选择其他词库'); return; }
+function startLearn(fromRegion) {
+  const rp = getRegionProgress();
+  const regionIdx = (fromRegion !== undefined) ? fromRegion : rp.unlocked;
+  if (regionIdx > rp.unlocked) { alert('🔒 请先通关前面的区域！'); return; }
 
-  // 今日复习队列（到期词优先 + 最多10个新词）
-  state.wordList = getTodayWords(words).sort(() => Math.random() - 0.5);
+  const region = REGIONS[regionIdx];
+  const start = regionIdx * WORDS_PER_REGION;
+  const end = Math.min(start + WORDS_PER_REGION, WORDS_A1.length);
+  const regionWords = WORDS_A1.slice(start, end);
+
+  const todayWords = getTodayWords(regionWords).sort(() => Math.random() - 0.5);
+  if (todayWords.length === 0) {
+    alert('这个区域的单词已经全部复习完了！试试其他区域吧');
+    return;
+  }
+
+  state.wordList = todayWords;
   state.currentIndex = 0;
   state.correctCount = 0;
   state.wrongCount = 0;
-  state.monsterIndex = 0;
-  state.monsterHP = MONSTERS[0].maxHP;
+  state.monsterHP = region.maxHP;
+  state.monsterMaxHP = region.maxHP;
+  state.monsterEmoji = region.monster;
+  state.monsterName = region.monsterName;
   state.streak = 0;
+  state.currentRegion = regionIdx;
 
   showScreen('learn');
-  loadMonster(0);
+  loadMonster();
   loadWord(0);
 }
 
@@ -1080,14 +1374,6 @@ function loadWord(index) {
 
   state.isFlipped = false;
   state.answered = false;
-
-  // 怪物切换（每 WORDS_PER_MONSTER 个词换一个怪物）
-  const newMonsterIdx = Math.min(Math.floor(index / WORDS_PER_MONSTER), MONSTERS.length - 1);
-  if (newMonsterIdx !== state.monsterIndex) {
-    state.monsterIndex = newMonsterIdx;
-    state.monsterHP = MONSTERS[newMonsterIdx].maxHP;
-    loadMonster(newMonsterIdx);
-  }
 
   // 进度
   const total = state.wordList.length;
@@ -1116,6 +1402,7 @@ function loadWord(index) {
   // 重置翻转
   const flip = document.getElementById('card-flip');
   flip.classList.remove('flipped');
+  flip.style.minHeight = '';
   flip.style.transition = 'none';
   setTimeout(() => { flip.style.transition = ''; }, 50);
 
@@ -1140,11 +1427,12 @@ function renderOptions(word) {
   grid.innerHTML = '';
   // 打乱选项顺序
   const shuffled = [...word.options].sort(() => Math.random() - 0.5);
+  const correctAnswer = word.options[0];
   shuffled.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'option-btn';
     btn.textContent = opt;
-    btn.onclick = () => checkAnswer(opt, word.meaning, btn);
+    btn.onclick = () => checkAnswer(opt, correctAnswer, btn);
     grid.appendChild(btn);
   });
 }
@@ -1152,7 +1440,10 @@ function renderOptions(word) {
 // 翻卡
 function flipCard() {
   state.isFlipped = true;
-  document.getElementById('card-flip').classList.add('flipped');
+  const cardFlip = document.getElementById('card-flip');
+  const cardBack = cardFlip.querySelector('.card-back');
+  cardFlip.classList.add('flipped');
+  cardFlip.style.minHeight = cardBack.scrollHeight + 'px';
   document.getElementById('btn-flip').style.display = 'none';
   document.getElementById('flip-hint').style.display = 'none';
 }
@@ -1185,6 +1476,7 @@ function checkAnswer(selected, correct, btn) {
     state.wrongCount++;
     state.streak = 0;
     monsterAttack();
+    monsterHeal();
   }
 
   // 保存 SM-2 进度
@@ -1195,6 +1487,11 @@ function checkAnswer(selected, correct, btn) {
   document.getElementById('back-hint').style.display = 'none';
   document.getElementById('back-meaning').style.display = 'block';
   document.getElementById('back-example-cn').style.display = 'block';
+
+  // 重新撑开卡片容器（答完后内容变高了）
+  const cardFlip = document.getElementById('card-flip');
+  const cardBack = cardFlip.querySelector('.card-back');
+  cardFlip.style.minHeight = cardBack.scrollHeight + 'px';
 
   document.getElementById('btn-next').classList.add('show');
 }
@@ -1246,24 +1543,22 @@ function speakSentence() {
 // ═══════════════════════════════
 // 怪物系统
 // ═══════════════════════════════
-function loadMonster(idx) {
-  const m = MONSTERS[idx];
+function loadMonster() {
   const avatar = document.getElementById('monster-avatar');
-  avatar.textContent = m.emoji;
+  avatar.textContent = state.monsterEmoji;
   avatar.style.animation = 'none';
   void avatar.offsetWidth;
   avatar.style.animation = 'monsterIn 0.5s cubic-bezier(0.34,1.56,0.64,1)';
-  document.getElementById('monster-name').textContent = m.name;
+  document.getElementById('monster-name').textContent = state.monsterName;
   updateMonsterHP();
 }
 
 function updateMonsterHP() {
-  const m = MONSTERS[state.monsterIndex];
-  const pct = Math.max(0, (state.monsterHP / m.maxHP) * 100);
+  const pct = Math.max(0, (state.monsterHP / state.monsterMaxHP) * 100);
   const fill = document.getElementById('monster-hp-fill');
   fill.style.width = pct + '%';
   fill.className = 'monster-hp-fill' + (pct <= 25 ? ' low' : pct <= 50 ? ' medium' : '');
-  document.getElementById('monster-hp-text').textContent = `${state.monsterHP} / ${m.maxHP}`;
+  document.getElementById('monster-hp-text').textContent = `${state.monsterHP} / ${state.monsterMaxHP}`;
 }
 
 function damageMonster(dmg) {
@@ -1271,6 +1566,8 @@ function damageMonster(dmg) {
 
   // 伤害数字浮起
   const el = document.getElementById('damage-float');
+  el.style.color = '#FF3B30';
+  el.textContent = '-' + dmg;
   el.className = 'damage-float';
   void el.offsetWidth;
   el.className = 'damage-float pop';
@@ -1288,6 +1585,21 @@ function damageMonster(dmg) {
       avatar.style.animation = 'monsterDie 0.5s ease forwards';
     }, 200);
   }
+}
+
+function monsterHeal() {
+  const heal = 5 + Math.floor(Math.random() * 6); // 随机回血 5-10
+  state.monsterHP = Math.min(state.monsterMaxHP, state.monsterHP + heal);
+
+  const el = document.getElementById('damage-float');
+  el.style.color = '#34C759';
+  el.textContent = '+' + heal;
+  el.className = 'damage-float';
+  void el.offsetWidth;
+  el.className = 'damage-float pop';
+  setTimeout(() => { el.style.color = '#FF3B30'; }, 750);
+
+  updateMonsterHP();
 }
 
 function monsterAttack() {
@@ -1349,18 +1661,128 @@ function renderExample(exampleHTML) {
 // 完成页
 // ═══════════════════════════════
 function showDone() {
+  // 先更新统计数字（最优先，不受后续错误影响）
   const total = state.correctCount + state.wrongCount;
   const rate = total > 0 ? Math.round((state.correctCount / total) * 100) : 0;
-
-  updateStreak();
-
-  document.getElementById('done-subtitle').innerHTML = `学完了 ${state.wordList.length} 个单词<br/>坚持每天一点点，英语会越来越好 💪`;
   document.getElementById('done-correct').textContent = state.correctCount;
   document.getElementById('done-wrong').textContent = state.wrongCount;
   document.getElementById('done-rate').textContent = rate + '%';
 
+  const monsterDead = state.monsterHP <= 0;
+  const region = REGIONS[state.currentRegion] || REGIONS[0];
+  const rp = getRegionProgress();
+
+  updateStreak();
+
+  // 保存区域通关
+  if (monsterDead && !rp.cleared.includes(state.currentRegion)) {
+    rp.cleared.push(state.currentRegion);
+    if (!rp.collection.includes(state.currentRegion)) {
+      rp.collection.push(state.currentRegion);
+    }
+    if (state.currentRegion === rp.unlocked && rp.unlocked < REGIONS.length - 1) {
+      rp.unlocked++;
+    }
+    saveRegionProgress(rp);
+  }
+
+  // 标题和文案
+  let emoji, title, subtitle;
+  const allCleared = rp.cleared.length >= REGIONS.length;
+  if (allCleared) {
+    emoji = '🏆'; title = '全部通关！';
+    subtitle = `五大区域全部征服！你是真正的词汇大师！`;
+  } else if (monsterDead) {
+    emoji = '🎉'; title = '怪物被打败了！';
+    subtitle = `${region.name} 通关！获得 ${region.rewardEmoji} ${region.rewardName}`;
+  } else {
+    emoji = '😤'; title = '怪物逃走了...';
+    subtitle = `${state.monsterEmoji} ${state.monsterName} 还剩 ${state.monsterHP} 点血，再试一次！`;
+  }
+
+  document.getElementById('done-emoji').textContent = emoji;
+  document.getElementById('done-title').textContent = title;
+  document.getElementById('done-subtitle').textContent = subtitle;
+
+  // 按钮区
+  const btnContainer = document.getElementById('done-buttons');
+  if (btnContainer) {
+    btnContainer.innerHTML = '';
+    const addBtn = (text, onclick, primary) => {
+      const b = document.createElement('button');
+      b.className = 'btn-again';
+      b.textContent = text;
+      b.onclick = onclick;
+      if (!primary) { b.style.background = '#F5F5F7'; b.style.color = '#1D1D1F'; }
+      btnContainer.appendChild(b);
+    };
+
+    if (!monsterDead) {
+      addBtn('重新挑战 💪', () => startLearn(state.currentRegion), true);
+    } else {
+      const hasNext = state.currentRegion < REGIONS.length - 1 && state.currentRegion === getRegionProgress().unlocked - 1;
+      if (hasNext) {
+        addBtn('继续挑战 →', () => startLearn(state.currentRegion + 1), true);
+        addBtn('再练一遍', () => startLearn(state.currentRegion), false);
+      } else if (allCleared) {
+        addBtn('查看成就 🏆', () => showCollection(), true);
+        addBtn('再练一遍', () => startLearn(state.currentRegion), false);
+      } else {
+        addBtn('继续挑战 →', () => startLearn(state.currentRegion), true);
+        addBtn('再练一遍', () => startLearn(state.currentRegion), false);
+      }
+    }
+    addBtn('返回主页', () => goHome(), false);
+  }
+
   showScreen('done');
 }
+
+// ═══════════════════════════════
+// 自动测试（在浏览器控制台调用 autoTest() 即可跑完10个单词）
+// ═══════════════════════════════
+function autoTest() {
+  if (confirm('自动测试：将模拟答对10个单词的完整流程。点击确定开始。')) {
+    resetAllProgress();
+    setTimeout(() => {
+      startLearn(0);
+      autoAnswerNext(0);
+    }, 500);
+  }
+}
+function autoAnswerNext(idx) {
+  if (idx >= 10) return;
+  const word = state.wordList[idx];
+  if (!word) { console.log('no word at', idx); return; }
+
+  setTimeout(() => {
+    // 翻卡
+    flipCard();
+    setTimeout(() => {
+      // 选正确选项
+      const correctAnswer = word.options[0];
+      const allBtns = document.querySelectorAll('.option-btn');
+      let clicked = false;
+      allBtns.forEach(b => {
+        if (b.textContent === correctAnswer && !clicked) {
+          b.click();
+          clicked = true;
+        }
+      });
+      setTimeout(() => {
+        console.log('word', idx+1, 'answered, clicking next...');
+        nextWord();
+        if (idx < 9) {
+          autoAnswerNext(idx + 1);
+        } else {
+          console.log('=== all 10 words done, showDone called ===');
+        }
+      }, 300);
+    }, 600);
+  }, 600);
+}
+console.log('🔧 自动测试已就绪：在控制台输入 autoTest() 然后回车即可');
+console.log('   或者直接点首页"重置进度"后手动测');
 
 // ═══════════════════════════════
 // 初始化
