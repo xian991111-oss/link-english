@@ -895,14 +895,22 @@
 
 </div>
 
+<script src="words-a1.js"></script>
 <script>
 // ═══════════════════════════════
-// 词库数据（框架内置，后续可按级别扩充）
+// 词库数据（从 words-a1.js 加载）
 // ═══════════════════════════════
 const WORDS_DB = {
   general: {
     name: "零基础通用",
-    words: [
+    words: WORDS_A1
+  },
+  primary:  { name:"小学词库",  words: [] },
+  middle:   { name:"初中词库",  words: [] },
+  high:     { name:"高中词库",  words: [] }
+};
+// ══ 以下为废弃内嵌数据，保留作备份 ══
+if (false) { const _unused = [
       { id:1,  word:"love",       syllables:["love"],              phonetic:"/lʌv/",          meaning:"爱；热爱",  hint:"❤️ 妈妈对你的感情，或者你对奶茶的感情，都可以用这个词",      story:"📖 世界上最常用的词之一——写歌、聊天、发朋友圈，到处都有它。既可以是名词（爱），也可以是动词（喜爱）", example:'I <strong>love</strong> spending time with my family.', example_cn:"我喜欢和家人待在一起。", emoji:"❤️🥰", options:["爱；热爱","恨","害怕","忘记"] },
       { id:2,  word:"time",       syllables:["time"],              phonetic:"/taɪm/",         meaning:"时间；次数", hint:"⏰ 最宝贵的东西——花钱能买，但买不回来的，就是它",            story:"📖 英语里使用频率第一的名词。'Time flies'时间飞逝，从小孩到老人，每个人都在说它", example:'<strong>Time</strong> flies when you\'re having fun.', example_cn:"快乐的时光总是过得很快。", emoji:"⏰✨", options:["时间；次数","地点","天气","金钱"] },
       { id:3,  word:"think",      syllables:["think"],             phonetic:"/θɪŋk/",         meaning:"认为；思考", hint:"💭 「我觉得……」「我以为……」用英语说出来就是这个词",            story:"📖 'I think…'是英语对话里出现最多的开头之一，想表达自己的想法，离不开它", example:'I <strong>think</strong> this is a great idea.', example_cn:"我认为这是个好主意。", emoji:"💭🧠", options:["认为；思考","看见","听说","感觉到"] },
@@ -922,14 +930,8 @@ const WORDS_DB = {
       { id:17, word:"believe",    syllables:["be","lieve"],        phonetic:"/bɪˈliːv/",     meaning:"相信；信任", hint:"💪 对某人有信心，或者认为某件事是真的，都用这个词",            story:"📖 'Believe in yourself'相信你自己——这句话出现在全球无数励志演讲和歌曲里", example:'I <strong>believe</strong> you can do anything you set your mind to.', example_cn:"我相信你能做到任何你下定决心的事。", emoji:"💪🌟", options:["相信；信任","怀疑","忘记","拒绝"] },
       { id:18, word:"easy",       syllables:["eas","y"],           phonetic:"/ˈiːzi/",       meaning:"容易的；轻松的", hint:"😌 不需要费太多力气，没什么难度——就是这个词",               story:"📖 'Take it easy'放轻松——这句日常口语里，最简单最常用的形容词之一。反义词是 hard/difficult", example:'Learning new words is easier with pictures.', example_cn:"配着图片来记新单词会容易很多。", emoji:"😌✅", options:["容易的","困难的","危险的","复杂的"] },
       { id:19, word:"world",      syllables:["world"],             phonetic:"/wɜːrld/",      meaning:"世界；全球", hint:"🌍 比国家更大的范围，全人类所在的这个地方",                    story:"📖 'Hello, World!'——程序员写第一行代码时都会输出这句话，是软件界最著名的两个词", example:'Travel opens your eyes to the <strong>world</strong>.', example_cn:"旅行让你开眼界，看见更大的世界。", emoji:"🌍🗺️", options:["世界；全球","城市","国家","村庄"] },
-      { id:20, word:"strong",     syllables:["strong"],            phonetic:"/strɒŋ/",       meaning:"强壮的；坚强的", hint:"💪 力气大是 strong，意志坚定也是 strong，咖啡浓也是 strong",  story:"📖 一词三用：身体、精神、味道都能用。'Stay strong'是全球最流行的鼓励语之一", example:'You are <strong>stronger</strong> than you think.', example_cn:"你比自己想象的更坚强。", emoji:"💪🦁", options:["强壮的；坚强的","虚弱的","普通的","温柔的"] }
-    ]
-  },
-  // 框架占位：后续添加词库数据
-  primary:  { name:"小学词库",  words: [] },
-  middle:   { name:"初中词库",  words: [] },
-  high:     { name:"高中词库",  words: [] }
-};
+      { id:20, word:"strong", syllables:["strong"], phonetic:"/strɒŋ/", meaning:"强壮的；坚强的", hint:"💪 力气大是 strong，意志坚定也是 strong，咖啡浓也是 strong", story:"📖 一词三用：身体、精神、味道都能用。'Stay strong'是全球最流行的鼓励语之一", example:'You are <strong>stronger</strong> than you think.', example_cn:"你比自己想象的更坚强。", emoji:"💪🦁", options:["强壮的；坚强的","虚弱的","普通的","温柔的"] }
+  ]; }
 
 // ═══════════════════════════════
 // SM-2 记忆算法（来自 SuperMemo，25 行）
