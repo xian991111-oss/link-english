@@ -1,0 +1,18 @@
+{
+  "name": "Link英语",
+  "short_name": "Link英语",
+  "description": "高频词汇学习，游戏化记忆",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#007AFF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
