@@ -780,69 +780,173 @@
     #screen-collection {
       padding-top: 56px;
     }
-    .collection-rarity-group {
-      margin-bottom: 24px;
+    .collection-grid {
+      padding: 0 4px;
     }
-    .rarity-header {
+
+    /* ── 掉落展示 ── */
+    .drops-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1D1D1F;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .drops-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .drop-card {
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+      min-width: 80px;
+      border: 2px solid;
+      animation: dropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes dropIn {
+      from { opacity: 0; transform: scale(0.5) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .drop-emoji { font-size: 36px; line-height: 1; }
+    .drop-name { font-size: 11px; font-weight: 600; color: #1D1D1F; margin-top: 6px; }
+    .drop-rarity { font-size: 9px; font-weight: 600; }
+
+    /* ── 图鉴：按区域分组 ── */
+    .collection-summary {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .collection-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #F5F5F7;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .collection-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #007AFF, #AF52DE, #FF9F0A);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .collection-progress-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6E6E73;
+    }
+    .collection-region-group {
+      background: #F5F5F7;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .collection-region-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+    }
+    .collection-region-left {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
     }
-    .rarity-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-    }
-    .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    .treasure-card {
-      background: #F5F5F7;
-      border-radius: 16px;
-      padding: 16px 8px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-    }
-    .treasure-card.collected {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
-    .treasure-emoji {
-      font-size: 40px;
-      line-height: 1;
-    }
-    .treasure-card:not(.collected) .treasure-emoji {
-      filter: grayscale(1);
-      opacity: 0.2;
-    }
-    .treasure-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: #1D1D1F;
-    }
-    .treasure-region {
+    .collection-region-emoji { font-size: 24px; }
+    .collection-region-name { font-size: 15px; font-weight: 600; color: #1D1D1F; }
+    .collection-region-badge {
       font-size: 10px;
-      color: #6E6E73;
-    }
-    .treasure-card:not(.collected) .treasure-name,
-    .treasure-card:not(.collected) .treasure-region {
-      color: #C7C7CC;
-    }
-    .treasure-rarity-tag {
-      font-size: 9px;
       padding: 1px 6px;
       border-radius: 100px;
       font-weight: 600;
+    }
+    .collection-region-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .collection-region-count { font-size: 13px; font-weight: 600; color: #6E6E73; }
+    .collection-region-arrow {
+      font-size: 14px;
+      color: #AEAEB2;
+      transition: transform 0.2s;
+    }
+    .collection-region-group.expanded .collection-region-arrow { transform: rotate(90deg); }
+    .collection-region-progress {
+      height: 3px;
+      background: #E5E5EA;
+      margin: 0 16px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .collection-region-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+    .collection-region-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 12px 16px;
+    }
+    .collection-region-group:not(.expanded) .collection-region-items { display: none; }
+    .collectible-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 10px 4px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      min-width: 0;
+    }
+    .collectible-card.collected { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .collectible-emoji { font-size: 28px; line-height: 1; display: block; }
+    .collectible-card:not(.collected) .collectible-emoji { filter: grayscale(1); opacity: 0.3; }
+    .collectible-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1D1D1F;
+      margin-top: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .collectible-card:not(.collected) .collectible-name { color: #C7C7CC; }
+    .collectible-type { font-size: 10px; font-weight: 500; display: block; margin-top: 2px; }
+
+    @media (max-width: 350px) {
+      .collection-region-items {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ── 地图总进度 ── */
+    .map-total-progress {
+      margin-top: 24px;
+      text-align: center;
+    }
+    .map-total-bar {
+      width: 100%;
+      height: 6px;
+      background: #E5E5EA;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .map-total-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #007AFF, #AF52DE, #FF9F0A);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+    .map-total-text {
+      font-size: 12px;
+      color: #AEAEB2;
     }
   </style>
 </head>
@@ -895,31 +999,31 @@
         <span class="level-badge badge-active">可用</span>
       </div>
 
-      <div class="level-card locked" onclick="showComingSoon('小学词库')">
+      <div class="level-card" id="card-primary" onclick="selectLevel('primary')">
         <div class="level-icon">🏫</div>
         <div class="level-info">
           <div class="level-name">小学词库</div>
           <div class="level-desc">小学阶段必备单词</div>
         </div>
-        <span class="level-badge badge-soon">即将上线</span>
+        <span class="level-badge badge-active">可用</span>
       </div>
 
-      <div class="level-card locked" onclick="showComingSoon('初中词库')">
+      <div class="level-card" id="card-middle" onclick="selectLevel('middle')">
         <div class="level-icon">📚</div>
         <div class="level-info">
           <div class="level-name">初中词库</div>
           <div class="level-desc">中考核心词汇</div>
         </div>
-        <span class="level-badge badge-soon">即将上线</span>
+        <span class="level-badge badge-active">可用</span>
       </div>
 
-      <div class="level-card locked" onclick="showComingSoon('高中词库')">
+      <div class="level-card" id="card-high" onclick="selectLevel('high')">
         <div class="level-icon">🎓</div>
         <div class="level-info">
           <div class="level-name">高中词库</div>
           <div class="level-desc">高考 + 大学英语</div>
         </div>
-        <span class="level-badge badge-soon">即将上线</span>
+        <span class="level-badge badge-active">可用</span>
       </div>
 
     </div>
@@ -1050,6 +1154,7 @@
         <div class="done-stat-label">正确率</div>
       </div>
     </div>
+    <div id="done-drops" style="display:none; width:100%; max-width:280px; margin-bottom:20px;"></div>
     <div id="done-buttons" style="width:100%; max-width:280px; display:flex; flex-direction:column; gap:10px;"></div>
   </div>
 
@@ -1060,18 +1165,18 @@
 </div>
 
 <script src="words-a1.js"></script>
+<script src="words-a2.js"></script>
+<script src="words-b1.js"></script>
+<script src="words-b2.js"></script>
 <script>
 // ═══════════════════════════════
-// 词库数据（从 words-a1.js 加载）
+// 词库数据（从 words-*.js 加载）
 // ═══════════════════════════════
 const WORDS_DB = {
-  general: {
-    name: "零基础通用",
-    words: WORDS_A1
-  },
-  primary:  { name:"小学词库",  words: [] },
-  middle:   { name:"初中词库",  words: [] },
-  high:     { name:"高中词库",  words: [] }
+  general:  { name:"零基础通用", words: WORDS_A1 },
+  primary:  { name:"小学词库",  words: WORDS_A2 },
+  middle:   { name:"初中词库",  words: WORDS_B1 },
+  high:     { name:"高中词库",  words: WORDS_B2 }
 };
 // ══ 以下为废弃内嵌数据，保留作备份 ══
 if (false) { const _unused = [
@@ -1123,13 +1228,18 @@ const STORE_KEY = 'link-english-v1';
 
 function loadStore()        { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; } }
 function saveStore(data)    { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
-function getProgress()      { return loadStore().progress || {}; }
+function getProgress() {
+  const store = loadStore();
+  const key = 'progress_' + state.currentLevel;
+  return store[key] || {};
+}
 
 function saveWordProgress(wordId, quality) {
   const store = loadStore();
-  if (!store.progress) store.progress = {};
-  const prev = store.progress[wordId] || { interval: 0, repetitions: 0, efactor: 2.5 };
-  store.progress[wordId] = sm2Review(prev, quality);
+  const key = 'progress_' + state.currentLevel;
+  if (!store[key]) store[key] = {};
+  const prev = store[key][wordId] || { interval: 0, repetitions: 0, efactor: 2.5 };
+  store[key][wordId] = sm2Review(prev, quality);
   saveStore(store);
 }
 
@@ -1159,11 +1269,28 @@ function getLearnedCount() { return Object.keys(getProgress()).length; }
 // 区域进度 & 成就收集
 function getRegionProgress() {
   const store = loadStore();
-  const rp = store.regionProgress;
+  const key = 'region_' + state.currentLevel;
+  const rp = store[key];
   if (rp && Array.isArray(rp.cleared) && Array.isArray(rp.collection) && typeof rp.unlocked === 'number') {
+    // 兼容旧数据：collection 是数字数组 → 转为对象数组
+    if (rp.collection.length > 0 && typeof rp.collection[0] === 'number') {
+      rp.collection = rp.collection.map(regionId => {
+        const boss = COLLECTIBLES.find(c => c.region === regionId && c.type === 'boss');
+        return boss ? { id: boss.id, region: regionId, time: 0 } : null;
+      }).filter(Boolean);
+      saveRegionProgress(rp);
+    }
     return rp;
   }
   return { unlocked: 0, cleared: [], collection: [] };
+}
+function isCollected(collectibleId) {
+  const rp = getRegionProgress();
+  return rp.collection.some(c => c.id === collectibleId);
+}
+function getRegionCollectionCount(regionId) {
+  const rp = getRegionProgress();
+  return rp.collection.filter(c => c.region === regionId).length;
 }
 function resetAllProgress() {
   if (confirm('确定要重置所有学习进度吗？\n\n这会清除：已学单词记录、连续天数、区域通关、成就收集\n\n此操作不可撤销！')) {
@@ -1174,7 +1301,8 @@ function resetAllProgress() {
 }
 function saveRegionProgress(data) {
   const store = loadStore();
-  store.regionProgress = data;
+  const key = 'region_' + state.currentLevel;
+  store[key] = data;
   saveStore(store);
 }
 
@@ -1200,7 +1328,105 @@ const RARITY_INFO = {
   purple: { label:'史诗', color:'#AF52DE', bg:'#F3E8FA', glow:'#AF52DE' },
   gold:   { label:'传说', color:'#FF9F0A', bg:'#FFF9E6', glow:'#FF9F0A' },
 };
-const WORDS_PER_REGION = Math.ceil(WORDS_A1.length / REGIONS.length); // 每个区域词数
+
+// 收集物配置：每区域8个（1 boss + 2 rare + 3 normal + 2 hidden）
+const COLLECTIBLES = [
+  // ── 区域0: 新手草原 ──
+  { id:'r0_boss',    region:0, emoji:'💎', name:'勇气宝石',     type:'boss',   rarity:'white' },
+  { id:'r0_rare1',   region:0, emoji:'🐱', name:'草地小猫',     type:'rare',   rarity:'green' },
+  { id:'r0_rare2',   region:0, emoji:'🍀', name:'幸运四叶草',   type:'rare',   rarity:'green' },
+  { id:'r0_norm1',   region:0, emoji:'🍎', name:'红苹果',       type:'normal', rarity:'white' },
+  { id:'r0_norm2',   region:0, emoji:'🪶', name:'白色羽毛',     type:'normal', rarity:'white' },
+  { id:'r0_norm3',   region:0, emoji:'🌻', name:'向日葵种子',   type:'normal', rarity:'white' },
+  { id:'r0_hid1',    region:0, emoji:'📜', name:'新手冒险手册', type:'hidden', rarity:'blue' },
+  { id:'r0_hid2',    region:0, emoji:'🪄', name:'学徒魔杖',     type:'hidden', rarity:'blue' },
+  // ── 区域1: 宁静溪谷 ──
+  { id:'r1_boss',    region:1, emoji:'🔮', name:'清泉水晶',     type:'boss',   rarity:'white' },
+  { id:'r1_rare1',   region:1, emoji:'🦊', name:'溪谷小狐狸',   type:'rare',   rarity:'green' },
+  { id:'r1_rare2',   region:1, emoji:'🫧', name:'魔法泡泡',     type:'rare',   rarity:'green' },
+  { id:'r1_norm1',   region:1, emoji:'🐚', name:'彩虹贝壳',     type:'normal', rarity:'white' },
+  { id:'r1_norm2',   region:1, emoji:'🍵', name:'花茶',         type:'normal', rarity:'white' },
+  { id:'r1_norm3',   region:1, emoji:'🪷', name:'莲花',         type:'normal', rarity:'white' },
+  { id:'r1_hid1',    region:1, emoji:'🗝️', name:'溪谷钥匙',    type:'hidden', rarity:'blue' },
+  { id:'r1_hid2',    region:1, emoji:'🧜', name:'人鱼护符',     type:'hidden', rarity:'blue' },
+  // ── 区域2: 迷雾森林 ──
+  { id:'r2_boss',    region:2, emoji:'🌿', name:'翡翠之叶',     type:'boss',   rarity:'green' },
+  { id:'r2_rare1',   region:2, emoji:'🦄', name:'迷雾独角兽',   type:'rare',   rarity:'blue' },
+  { id:'r2_rare2',   region:2, emoji:'🍄', name:'毒蘑菇王',     type:'rare',   rarity:'blue' },
+  { id:'r2_norm1',   region:2, emoji:'🌲', name:'古树树苗',     type:'normal', rarity:'green' },
+  { id:'r2_norm2',   region:2, emoji:'🪺', name:'精灵鸟巢',     type:'normal', rarity:'green' },
+  { id:'r2_norm3',   region:2, emoji:'🍯', name:'森林蜂蜜',     type:'normal', rarity:'green' },
+  { id:'r2_hid1',    region:2, emoji:'🗺️', name:'迷雾藏宝图',  type:'hidden', rarity:'purple' },
+  { id:'r2_hid2',    region:2, emoji:'🧝', name:'精灵耳环',     type:'hidden', rarity:'purple' },
+  // ── 区域3: 翠绿丘陵 ──
+  { id:'r3_boss',    region:3, emoji:'⛰️', name:'丘陵之心',    type:'boss',   rarity:'green' },
+  { id:'r3_rare1',   region:3, emoji:'🐶', name:'丘陵牧羊犬',   type:'rare',   rarity:'blue' },
+  { id:'r3_rare2',   region:3, emoji:'🌾', name:'金色麦穗',     type:'rare',   rarity:'blue' },
+  { id:'r3_norm1',   region:3, emoji:'🧀', name:'山羊奶酪',     type:'normal', rarity:'green' },
+  { id:'r3_norm2',   region:3, emoji:'🧺', name:'野餐篮',       type:'normal', rarity:'green' },
+  { id:'r3_norm3',   region:3, emoji:'🪻', name:'薰衣草束',     type:'normal', rarity:'green' },
+  { id:'r3_hid1',    region:3, emoji:'📿', name:'大地念珠',     type:'hidden', rarity:'purple' },
+  { id:'r3_hid2',    region:3, emoji:'🦅', name:'丘陵之鹰',     type:'hidden', rarity:'purple' },
+  // ── 区域4: 暗影山脉 ──
+  { id:'r4_boss',    region:4, emoji:'⚔️', name:'暗影之刃',    type:'boss',   rarity:'blue' },
+  { id:'r4_rare1',   region:4, emoji:'🦇', name:'暗影蝙蝠',     type:'rare',   rarity:'purple' },
+  { id:'r4_rare2',   region:4, emoji:'💜', name:'暗影宝石',     type:'rare',   rarity:'purple' },
+  { id:'r4_norm1',   region:4, emoji:'🛡️', name:'黑铁盾牌',    type:'normal', rarity:'blue' },
+  { id:'r4_norm2',   region:4, emoji:'🕯️', name:'暗影蜡烛',    type:'normal', rarity:'blue' },
+  { id:'r4_norm3',   region:4, emoji:'🧿', name:'邪恶之眼护符', type:'normal', rarity:'blue' },
+  { id:'r4_hid1',    region:4, emoji:'🗡️', name:'弑神者匕首',  type:'hidden', rarity:'gold' },
+  { id:'r4_hid2',    region:4, emoji:'🧛', name:'吸血鬼披风',   type:'hidden', rarity:'gold' },
+  // ── 区域5: 暴风海岸 ──
+  { id:'r5_boss',    region:5, emoji:'🔱', name:'海神三叉戟',   type:'boss',   rarity:'blue' },
+  { id:'r5_rare1',   region:5, emoji:'🐳', name:'深海蓝鲸',     type:'rare',   rarity:'purple' },
+  { id:'r5_rare2',   region:5, emoji:'🌊', name:'风暴水滴',     type:'rare',   rarity:'purple' },
+  { id:'r5_norm1',   region:5, emoji:'⚓', name:'沉船锚',       type:'normal', rarity:'blue' },
+  { id:'r5_norm2',   region:5, emoji:'🦑', name:'小章鱼',       type:'normal', rarity:'blue' },
+  { id:'r5_norm3',   region:5, emoji:'🧂', name:'海盐结晶',     type:'normal', rarity:'blue' },
+  { id:'r5_hid1',    region:5, emoji:'🔱', name:'海王权杖',  type:'hidden', rarity:'gold' },
+  { id:'r5_hid2',    region:5, emoji:'⛵', name:'幽灵船模型',   type:'hidden', rarity:'gold' },
+  // ── 区域6: 火焰峡谷 ──
+  { id:'r6_boss',    region:6, emoji:'🔥', name:'烈焰之心',     type:'boss',   rarity:'purple' },
+  { id:'r6_rare1',   region:6, emoji:'🐲', name:'火龙蛋',       type:'rare',   rarity:'gold' },
+  { id:'r6_rare2',   region:6, emoji:'🌋', name:'岩浆精华',     type:'rare',   rarity:'gold' },
+  { id:'r6_norm1',   region:6, emoji:'🌶️', name:'地狱辣椒',    type:'normal', rarity:'purple' },
+  { id:'r6_norm2',   region:6, emoji:'🧨', name:'爆裂火药',     type:'normal', rarity:'purple' },
+  { id:'r6_norm3',   region:6, emoji:'🫕', name:'熔岩火锅',     type:'normal', rarity:'purple' },
+  { id:'r6_hid1',    region:6, emoji:'👑', name:'火焰王冠',     type:'hidden', rarity:'gold' },
+  { id:'r6_hid2',    region:6, emoji:'🚀', name:'火箭推进器',   type:'hidden', rarity:'gold' },
+  // ── 区域7: 星辰高原 ──
+  { id:'r7_boss',    region:7, emoji:'🌠', name:'流星碎片',     type:'boss',   rarity:'purple' },
+  { id:'r7_rare1',   region:7, emoji:'🐉', name:'星空巨龙',     type:'rare',   rarity:'gold' },
+  { id:'r7_rare2',   region:7, emoji:'💜', name:'星尘结晶',     type:'rare',   rarity:'gold' },
+  { id:'r7_norm1',   region:7, emoji:'⭐', name:'许愿星',       type:'normal', rarity:'purple' },
+  { id:'r7_norm2',   region:7, emoji:'🌙', name:'月光石',       type:'normal', rarity:'purple' },
+  { id:'r7_norm3',   region:7, emoji:'🪐', name:'迷你行星',     type:'normal', rarity:'purple' },
+  { id:'r7_hid1',    region:7, emoji:'🌌', name:'银河罗盘',     type:'hidden', rarity:'gold' },
+  { id:'r7_hid2',    region:7, emoji:'🔭', name:'星辰望远镜',   type:'hidden', rarity:'gold' },
+  // ── 区域8: 远古遗迹 ──
+  { id:'r8_boss',    region:8, emoji:'👑', name:'智慧王冠',     type:'boss',   rarity:'gold' },
+  { id:'r8_rare1',   region:8, emoji:'🗿', name:'石像鬼',       type:'rare',   rarity:'gold' },
+  { id:'r8_rare2',   region:8, emoji:'💎', name:'远古钻石',     type:'rare',   rarity:'gold' },
+  { id:'r8_norm1',   region:8, emoji:'⚱️', name:'法老陶罐',    type:'normal', rarity:'gold' },
+  { id:'r8_norm2',   region:8, emoji:'🏛️', name:'神殿柱碎片',  type:'normal', rarity:'gold' },
+  { id:'r8_norm3',   region:8, emoji:'📿', name:'祭司念珠',     type:'normal', rarity:'gold' },
+  { id:'r8_hid1',    region:8, emoji:'🧿', name:'荷鲁斯之眼',   type:'hidden', rarity:'gold' },
+  { id:'r8_hid2',    region:8, emoji:'📚', name:'万能百科全书', type:'hidden', rarity:'gold' },
+  // ── 区域9: 词语城堡 ──
+  { id:'r9_boss',    region:9, emoji:'🌟', name:'传奇之星',     type:'boss',   rarity:'gold' },
+  { id:'r9_rare1',   region:9, emoji:'🐲', name:'终焉小龙',     type:'rare',   rarity:'gold' },
+  { id:'r9_rare2',   region:9, emoji:'🎭', name:'命运面具',     type:'rare',   rarity:'gold' },
+  { id:'r9_norm1',   region:9, emoji:'🏆', name:'冠军奖杯',     type:'normal', rarity:'gold' },
+  { id:'r9_norm2',   region:9, emoji:'🎪', name:'皇家马戏帐篷', type:'normal', rarity:'gold' },
+  { id:'r9_norm3',   region:9, emoji:'🎨', name:'大师画笔',     type:'normal', rarity:'gold' },
+  { id:'r9_hid1',    region:9, emoji:'🐉', name:'龙骑士勋章',   type:'hidden', rarity:'gold' },
+  { id:'r9_hid2',    region:9, emoji:'💫', name:'词汇大师证书', type:'hidden', rarity:'gold' },
+];
+
+function getWordsPerRegion() {
+  const allWords = WORDS_DB[state.currentLevel]?.words || WORDS_A1;
+  return Math.ceil(allWords.length / REGIONS.length);
+}
 
 // ═══════════════════════════════
 // 状态管理
@@ -1237,6 +1463,7 @@ function selectLevel(level) {
   state.currentLevel = level;
   document.querySelectorAll('.level-card:not(.locked)').forEach(c => c.classList.remove('selected'));
   document.getElementById('card-' + level)?.classList.add('selected');
+  updateHomeStats();
 }
 
 function showComingSoon(name) {
@@ -1272,6 +1499,7 @@ function showMap() {
 function renderMap() {
   const rp = getRegionProgress();
   const container = document.getElementById('map-path');
+  const collectedIds = new Set(rp.collection.map(c => c.id));
   let html = '';
   REGIONS.forEach((r, i) => {
     if (i > 0) {
@@ -1281,17 +1509,26 @@ function renderMap() {
     if (i === rp.unlocked) { status = '⚔️'; cls = 'unlocked'; }
     if (rp.cleared.includes(i)) { status = '✅'; cls = 'cleared'; }
     const ri = RARITY_INFO[r.rarity];
+    const regionItems = COLLECTIBLES.filter(c => c.region === i);
+    const regionCollected = regionItems.filter(c => collectedIds.has(c.id)).length;
     html += `<div class="region-node ${cls}" onclick="selectRegion(${i})">
       <div class="region-emoji">${r.emoji}</div>
       <div class="region-info">
         <div class="region-name">${r.name}
           <span style="font-size:10px; padding:1px 6px; border-radius:100px; background:${ri.color}20; color:${ri.color}; margin-left:6px; font-weight:600;">${ri.label}</span>
         </div>
-        <div class="region-monster">${r.monster} ${r.monsterName} · ${r.rewardEmoji}${r.rewardName}</div>
+        <div class="region-monster">${r.monster} ${r.monsterName} · 🏆 ${regionCollected}/${regionItems.length}</div>
       </div>
       <div class="region-status">${status}</div>
     </div>`;
   });
+  // 总进度
+  const totalCollected = collectedIds.size;
+  const totalItems = COLLECTIBLES.length;
+  html += `<div class="map-total-progress">
+    <div class="map-total-bar"><div class="map-total-fill" style="width:${(totalCollected/totalItems*100).toFixed(1)}%"></div></div>
+    <div class="map-total-text">总收集进度：${totalCollected}/${totalItems}</div>
+  </div>`;
   container.innerHTML = html;
 }
 function selectRegion(idx) {
@@ -1306,28 +1543,48 @@ function showCollection() {
 function renderCollection() {
   const rp = getRegionProgress();
   const container = document.getElementById('collection-grid');
-  const rarityOrder = ['gold','purple','blue','green','white'];
-  let html = '';
-  rarityOrder.forEach(rarity => {
-    const info = RARITY_INFO[rarity];
-    const regionsInRarity = REGIONS.filter(r => r.rarity === rarity);
-    if (regionsInRarity.length === 0) return;
-    const collectedCount = regionsInRarity.filter(r => rp.collection.includes(r.id)).length;
-    html += `<div class="collection-rarity-group">
-      <div class="rarity-header" style="background:${info.bg}; color:${info.color};">
-        <span class="rarity-dot" style="background:${info.color}; box-shadow:0 0 8px ${info.glow};"></span>
-        ${info.label} · ${collectedCount}/${regionsInRarity.length}
+  const totalItems = COLLECTIBLES.length;
+  const collectedIds = new Set(rp.collection.map(c => c.id));
+  const totalCollected = collectedIds.size;
+
+  let html = `<div class="collection-summary">
+    <div class="collection-progress-bar">
+      <div class="collection-progress-fill" style="width:${(totalCollected/totalItems*100).toFixed(1)}%"></div>
+    </div>
+    <div class="collection-progress-text">已收集 ${totalCollected} / ${totalItems}</div>
+  </div>`;
+
+  REGIONS.forEach((region, regionIdx) => {
+    const regionItems = COLLECTIBLES.filter(c => c.region === regionIdx);
+    const regionCollected = regionItems.filter(c => collectedIds.has(c.id)).length;
+    const ri = RARITY_INFO[region.rarity];
+    const pct = (regionCollected / regionItems.length * 100).toFixed(0);
+
+    html += `<div class="collection-region-group">
+      <div class="collection-region-header" onclick="this.parentElement.classList.toggle('expanded')">
+        <div class="collection-region-left">
+          <span class="collection-region-emoji">${region.emoji}</span>
+          <span class="collection-region-name">${region.name}</span>
+          <span class="collection-region-badge" style="background:${ri.color}20; color:${ri.color};">${ri.label}</span>
+        </div>
+        <div class="collection-region-right">
+          <span class="collection-region-count">${regionCollected}/${regionItems.length}</span>
+          <span class="collection-region-arrow">▸</span>
+        </div>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">`;
-    regionsInRarity.forEach(r => {
-      const collected = rp.collection.includes(r.id);
-      html += `<div class="treasure-card${collected ? ' collected' : ''}" style="${collected ? 'background:'+info.bg+'; border-color:'+info.color+';' : ''}">
-        <div class="treasure-emoji">${r.rewardEmoji}</div>
-        <div class="treasure-name">${r.rewardName}</div>
-        <div class="treasure-region">${r.emoji} ${r.name}</div>
-        <span class="treasure-rarity-tag" style="background:${info.color}20; color:${info.color};">${collected ? '已收集' : info.label}</span>
+      <div class="collection-region-progress"><div class="collection-region-fill" style="width:${pct}%; background:${ri.color};"></div></div>
+      <div class="collection-region-items">`;
+
+    regionItems.forEach(item => {
+      const got = collectedIds.has(item.id);
+      const itemRi = RARITY_INFO[item.rarity];
+      html += `<div class="collectible-card${got ? ' collected' : ''}" style="${got ? 'border-color:'+itemRi.color+'; background:'+itemRi.bg+';' : ''}">
+        <div class="collectible-emoji">${got ? item.emoji : '❓'}</div>
+        <div class="collectible-name">${got ? item.name : '???'}</div>
+        <span class="collectible-type" style="color:${got ? itemRi.color : '#C7C7CC'};">${got ? {boss:'Boss',rare:'稀有',normal:'普通',hidden:'隐藏'}[item.type] : '未发现'}</span>
       </div>`;
     });
+
     html += `</div></div>`;
   });
   container.innerHTML = html;
@@ -1342,9 +1599,11 @@ function startLearn(fromRegion) {
   if (regionIdx > rp.unlocked) { alert('🔒 请先通关前面的区域！'); return; }
 
   const region = REGIONS[regionIdx];
-  const start = regionIdx * WORDS_PER_REGION;
-  const end = Math.min(start + WORDS_PER_REGION, WORDS_A1.length);
-  const regionWords = WORDS_A1.slice(start, end);
+  const allWords = WORDS_DB[state.currentLevel]?.words || WORDS_A1;
+  const wordsPerRegion = getWordsPerRegion();
+  const start = regionIdx * wordsPerRegion;
+  const end = Math.min(start + wordsPerRegion, allWords.length);
+  const regionWords = allWords.slice(start, end);
 
   const todayWords = getTodayWords(regionWords).sort(() => Math.random() - 0.5);
   if (todayWords.length === 0) {
@@ -1658,6 +1917,64 @@ function renderExample(exampleHTML) {
 }
 
 // ═══════════════════════════════
+// ═══════════════════════════════
+// 掉落引擎
+// ═══════════════════════════════
+function rollDrops(regionIdx, correctRate, isPerfect) {
+  const rp = getRegionProgress();
+  const regionItems = COLLECTIBLES.filter(c => c.region === regionIdx);
+  const alreadyGot = new Set(rp.collection.filter(c => c.region === regionIdx).map(c => c.id));
+  const drops = [];
+
+  // 1. Boss奖励：首次通关必得
+  const boss = regionItems.find(c => c.type === 'boss');
+  if (boss && !alreadyGot.has(boss.id)) {
+    drops.push(boss);
+  }
+
+  // 2. 稀有掉落：正确率≥80%时，50%概率
+  if (correctRate >= 80) {
+    const rarePool = regionItems.filter(c => c.type === 'rare' && !alreadyGot.has(c.id));
+    if (rarePool.length > 0 && Math.random() < 0.5) {
+      drops.push(rarePool[Math.floor(Math.random() * rarePool.length)]);
+    }
+  }
+
+  // 3. 普通掉落：100%掉落一个
+  const normalPool = regionItems.filter(c => c.type === 'normal' && !alreadyGot.has(c.id));
+  if (normalPool.length > 0) {
+    drops.push(normalPool[Math.floor(Math.random() * normalPool.length)]);
+  }
+
+  // 4. 隐藏物品：完美通关(0错)触发
+  if (isPerfect) {
+    const hiddenPool = regionItems.filter(c => c.type === 'hidden' && !alreadyGot.has(c.id));
+    if (hiddenPool.length > 0) {
+      drops.push(hiddenPool[Math.floor(Math.random() * hiddenPool.length)]);
+    }
+  }
+
+  // 去重（理论上不应该重复，但以防万一）
+  const seen = new Set();
+  return drops.filter(d => {
+    if (seen.has(d.id)) return false;
+    seen.add(d.id);
+    return true;
+  });
+}
+
+function saveDrops(drops) {
+  if (drops.length === 0) return;
+  const rp = getRegionProgress();
+  const now = Date.now();
+  drops.forEach(d => {
+    if (!rp.collection.some(c => c.id === d.id)) {
+      rp.collection.push({ id: d.id, region: d.region, time: now });
+    }
+  });
+  saveRegionProgress(rp);
+}
+
 // 完成页
 // ═══════════════════════════════
 function showDone() {
@@ -1674,27 +1991,36 @@ function showDone() {
 
   updateStreak();
 
-  // 保存区域通关
-  if (monsterDead && !rp.cleared.includes(state.currentRegion)) {
-    rp.cleared.push(state.currentRegion);
-    if (!rp.collection.includes(state.currentRegion)) {
-      rp.collection.push(state.currentRegion);
+  // 掉落系统
+  const isPerfect = monsterDead && state.wrongCount === 0;
+  let newDrops = [];
+  if (monsterDead) {
+    newDrops = rollDrops(state.currentRegion, rate, isPerfect);
+    saveDrops(newDrops);
+    // 重新加载 rp，因为 saveDrops 已经更新了 collection
+    const updatedRp = getRegionProgress();
+    // 保存区域通关
+    if (!updatedRp.cleared.includes(state.currentRegion)) {
+      updatedRp.cleared.push(state.currentRegion);
+      if (state.currentRegion === updatedRp.unlocked && updatedRp.unlocked < REGIONS.length - 1) {
+        updatedRp.unlocked++;
+      }
     }
-    if (state.currentRegion === rp.unlocked && rp.unlocked < REGIONS.length - 1) {
-      rp.unlocked++;
-    }
-    saveRegionProgress(rp);
+    saveRegionProgress(updatedRp);
   }
 
   // 标题和文案
   let emoji, title, subtitle;
-  const allCleared = rp.cleared.length >= REGIONS.length;
+  // 用 updatedRp（如果有）来判断是否全部通关
+  const finalRp = monsterDead ? getRegionProgress() : rp;
+  const allCleared = finalRp.cleared.length >= REGIONS.length;
   if (allCleared) {
     emoji = '🏆'; title = '全部通关！';
-    subtitle = `五大区域全部征服！你是真正的词汇大师！`;
+    subtitle = `全部区域征服！你是真正的词汇大师！`;
   } else if (monsterDead) {
     emoji = '🎉'; title = '怪物被打败了！';
-    subtitle = `${region.name} 通关！获得 ${region.rewardEmoji} ${region.rewardName}`;
+    subtitle = `${region.name} 通关！`;
+    if (isPerfect) subtitle += ' 完美通关！';
   } else {
     emoji = '😤'; title = '怪物逃走了...';
     subtitle = `${state.monsterEmoji} ${state.monsterName} 还剩 ${state.monsterHP} 点血，再试一次！`;
@@ -1703,6 +2029,27 @@ function showDone() {
   document.getElementById('done-emoji').textContent = emoji;
   document.getElementById('done-title').textContent = title;
   document.getElementById('done-subtitle').textContent = subtitle;
+
+  // 掉落展示区
+  const dropContainer = document.getElementById('done-drops');
+  if (dropContainer) {
+    if (newDrops.length > 0) {
+      let dropHtml = '<div class="drops-title">获得新物品！</div><div class="drops-grid">';
+      newDrops.forEach((d, i) => {
+        const ri = RARITY_INFO[d.rarity];
+        dropHtml += `<div class="drop-card" style="animation-delay:${i * 0.15}s; border-color:${ri.color}; background:${ri.bg};">
+          <div class="drop-emoji">${d.emoji}</div>
+          <div class="drop-name">${d.name}</div>
+          <span class="drop-rarity" style="color:${ri.color};">${ri.label}</span>
+        </div>`;
+      });
+      dropHtml += '</div>';
+      dropContainer.innerHTML = dropHtml;
+      dropContainer.style.display = 'block';
+    } else {
+      dropContainer.style.display = 'none';
+    }
+  }
 
   // 按钮区
   const btnContainer = document.getElementById('done-buttons');
